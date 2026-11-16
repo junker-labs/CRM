@@ -55,7 +55,7 @@
 	}
 </script>
 
-<svelte:head><title>Unternehmen – CRM</title></svelte:head>
+<svelte:head><title>Unternehmen – junker.labs deals</title></svelte:head>
 
 <div class="mx-auto max-w-6xl p-6">
 	<PageHeader title="Unternehmen" bind:search>
@@ -112,7 +112,7 @@
 									href={websiteHref(c.website)}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="text-link hover:underline"
+									class="link"
 									onclick={(e) => e.stopPropagation()}>{websiteLabel(c.website)}</a
 								>
 							{/if}

@@ -22,7 +22,7 @@
 		class={cn(
 			'ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full px-1.5 text-xs leading-5 font-medium tabular-nums',
 			count.overdue
-				? 'bg-destructive text-white'
+				? 'bg-destructive text-white dark:text-background'
 				: 'bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300'
 		)}
 		title={text}

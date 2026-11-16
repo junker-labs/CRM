@@ -1,6 +1,8 @@
-# CRM
+# junker.labs deals
 
-Schlankes internes CRM. Backend: [PocketBase](https://pocketbase.io) (pinned 0.40.6), Frontend: SvelteKit / Svelte 5 als statische SPA.
+*Deals statt Dashboards.* Schlankes, kosteneffizientes Self-Service-CRM von junkerlabs.
+Backend: [PocketBase](https://pocketbase.io) (pinned 0.40.6), Frontend: SvelteKit / Svelte 5 als statische SPA.
+Design nach dem junkerlabs Brand-Guide (Repo `junker-labs/brand`), umgesetzt in `web/src/lib/brand/`.
 
 - **Leads** – Pipeline als Kanban-Board (Phasen konfigurierbar, Drag & Drop, live für alle).
   Ein Lead hat Titel, Unternehmen, einen oder mehrere Kontakte, optional ein

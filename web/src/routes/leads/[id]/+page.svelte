@@ -86,7 +86,7 @@
 	const lead = $derived(store?.lead ?? null);
 </script>
 
-<svelte:head><title>{lead?.title ?? 'Lead'} – CRM</title></svelte:head>
+<svelte:head><title>{lead?.title ?? 'Lead'} – junker.labs deals</title></svelte:head>
 
 <div class="h-full overflow-y-auto">
 	<div class="mx-auto flex max-w-7xl flex-col gap-4 p-4 sm:p-6">

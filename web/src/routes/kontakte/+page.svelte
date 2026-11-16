@@ -70,7 +70,7 @@
 	}
 </script>
 
-<svelte:head><title>Kontakte – CRM</title></svelte:head>
+<svelte:head><title>Kontakte – junker.labs deals</title></svelte:head>
 
 <div class="mx-auto max-w-6xl p-6">
 	<PageHeader title="Kontakte" bind:search>
@@ -140,7 +140,7 @@
 								{#if c.company && companies.get(c.company)}
 									<a
 										href="/unternehmen/{c.company}"
-										class="text-link hover:underline"
+										class="link"
 										onclick={(e) => e.stopPropagation()}>{companyName(c.company)}</a
 									>
 								{/if}
@@ -150,7 +150,7 @@
 								{#if c.email}
 									<a
 										href="mailto:{c.email}"
-										class="text-link hover:underline"
+										class="link"
 										onclick={(e) => e.stopPropagation()}>{c.email}</a
 									>
 								{/if}

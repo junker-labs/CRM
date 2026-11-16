@@ -55,7 +55,7 @@
 	}
 </script>
 
-<svelte:head><title>{company?.name ?? 'Unternehmen'} – CRM</title></svelte:head>
+<svelte:head><title>{company?.name ?? 'Unternehmen'} – junker.labs deals</title></svelte:head>
 
 {#snippet leadRow(l: CompanyLead, closed: boolean)}
 	{@const stage = companyLeads.stageOf(l.column)}
@@ -100,18 +100,18 @@
 								href={websiteHref(company.website)}
 								target="_blank"
 								rel="noopener noreferrer"
-								class="flex items-center gap-1.5 text-link hover:underline"
+								class="flex items-center gap-1.5 link"
 								><GlobeIcon class="size-4" />{websiteLabel(company.website)}</a
 							>
 						{/if}
 						{#if company.email}
-							<a href="mailto:{company.email}" class="flex items-center gap-1.5 text-link hover:underline"
+							<a href="mailto:{company.email}" class="flex items-center gap-1.5 link"
 								><MailIcon class="size-4" />{company.email}</a
 							>
 						{/if}
 						{#if company.phone}
 							{#if telHref(company.phone)}
-								<a href={telHref(company.phone)} class="flex items-center gap-1.5 text-link hover:underline"
+								<a href={telHref(company.phone)} class="flex items-center gap-1.5 link"
 									><PhoneIcon class="size-4" />{company.phone}</a
 								>
 							{:else}
@@ -217,7 +217,7 @@
 													{#if c.email}
 														<a
 															href="mailto:{c.email}"
-															class="text-link hover:underline"
+															class="link"
 															onclick={(e) => e.stopPropagation()}>{c.email}</a
 														>
 													{/if}
@@ -226,7 +226,7 @@
 													{#if c.phone && telHref(c.phone)}
 														<a
 															href={telHref(c.phone)}
-															class="text-link hover:underline"
+															class="link"
 															onclick={(e) => e.stopPropagation()}>{c.phone}</a
 														>
 													{:else}

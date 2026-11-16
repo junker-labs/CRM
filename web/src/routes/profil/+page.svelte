@@ -26,7 +26,7 @@
 	const userLine = $derived([auth.user?.name, auth.user?.email].filter(Boolean).join(' · '));
 </script>
 
-<svelte:head><title>Profil – CRM</title></svelte:head>
+<svelte:head><title>Profil – junker.labs deals</title></svelte:head>
 
 <div class="h-full overflow-y-auto">
 	<div class="mx-auto grid max-w-3xl gap-6 p-4 sm:p-6">

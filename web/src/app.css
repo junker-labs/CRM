@@ -5,9 +5,9 @@
    schon in app.html gesetzt). Ohne gespeicherte Wahl folgt sie dem Gerät. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Farben, Schrift, Radius, Logo und Button-Form: BlueBerk UI-Modul (gemeinsam mit den
-   anderen BlueBerk-Apps). Hier nur, was nur das CRM braucht. */
-@import './lib/brand/blueberk.css';
+/* Farben, Schrift, Radius, Wortmarke, Amber-Unterstrich und Glas: junkerlabs UI-Modul
+   (Brand-Guide junker-labs/brand). Hier nur, was nur das CRM braucht. */
+@import './lib/brand/junkerlabs.css';
 
 :root {
 	--header-h: 3.5rem;

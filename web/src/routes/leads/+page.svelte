@@ -89,7 +89,7 @@
 	}
 </script>
 
-<svelte:head><title>Leads – CRM</title></svelte:head>
+<svelte:head><title>Leads – junker.labs deals</title></svelte:head>
 
 <div class="flex h-full flex-col">
 	<div class="flex items-center gap-2 px-4 pt-3">

@@ -1,4 +1,4 @@
-// Reads the colour tokens out of blueberk.css so the tests can check contrast without a
+// Reads the colour tokens out of junkerlabs.css so the tests can check contrast without a
 // browser. Only what that file uses: hex colours and var(--x) references to the palette.
 
 export type Tokens = Record<string, string>;
@@ -70,4 +70,17 @@ export function luminance(hex: string): number {
 export function contrast(a: string, b: string): number {
 	const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
 	return (hi + 0.05) / (lo + 0.05);
+}
+
+/** Colour of `top` at `alpha` (0..1) painted over the opaque `bottom`, as #rrggbb. */
+export function blend(top: string, bottom: string, alpha: number): string {
+	const t = hexToRgb(top);
+	const b = hexToRgb(bottom);
+	return (
+		'#' +
+		t
+			.map((c, i) => Math.round(c * alpha + b[i] * (1 - alpha)))
+			.map((c) => c.toString(16).padStart(2, '0'))
+			.join('')
+	);
 }

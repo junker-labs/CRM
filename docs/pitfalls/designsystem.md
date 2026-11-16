@@ -3,7 +3,7 @@
 Lesen, bevor du an UI-Komponenten, `app.css` oder Layout arbeitest.
 
 Alle UI-Bausteine kommen aus **shadcn-svelte** (Style `vega`, Basisfarbe `neutral`,
-Farben aus dem BlueBerk-Modul, siehe unten), das Layout aus Tailwind-Utilities. Icons: `@lucide/svelte`, einzeln
+Farben aus dem junkerlabs-Modul, siehe unten), das Layout aus Tailwind-Utilities. Icons: `@lucide/svelte`, einzeln
 importiert (`@lucide/svelte/icons/<name>`), damit nur genutzte Icons im Bundle landen.
 
 ## Werkzeug
@@ -24,22 +24,44 @@ importiert (`@lucide/svelte/icons/<name>`), damit nur genutzte Icons im Bundle l
   generierten Imports (`from "#lib/utils.js"`), das funktioniert.
 * Die generierten Dateien nutzen doppelte Anführungszeichen — so lassen, nicht umformatieren.
 
-## BlueBerk UI-Modul
+## junkerlabs UI-Modul
 
-* **Farben, Schrift (Sora, selbst gehostet über `@fontsource-variable/sora`), Radius, Logo
-  und Button-Form stehen in `web/src/lib/brand/blueberk.css`**, nicht in `app.css`. Die Datei
-  ist für alle BlueBerk-Apps gedacht und bringt ihr eigenes `@theme inline` für `text-link`,
-  `bg-bb-*` und `font-sans` mit; `app.css` importiert sie und hält nur CRM-Eigenes.
+* **Verbindlich ist der Brand-Guide** (Repo `junker-labs/brand`, `README.md`); wo er schweigt,
+  gelten die Werte aus Workbench `packages/ui/src/styles/tokens.css` — aber nicht dessen dort
+  gelistete Abweichungen (blaue Links, Amber im Header-Logo/als Chart-Farbe).
+* **Farben, Schrift, Radius, Wortmarke, Unterstrich und Glas stehen in
+  `web/src/lib/brand/junkerlabs.css`**, nicht in `app.css`. Die Datei bringt ihr eigenes
+  `@theme inline` (`text-link`, `bg-header`, `text-header-muted`, `*-jl-amber`, `font-display`,
+  System-Schrift als `font-sans`) mit; `app.css` importiert sie und mappt nur die shadcn-Namen.
   Text- und Ring-Farben als Hex — `tokens.test.ts` prüft daraus die Kontraste (Text 4,5:1,
-  Fokus-Ring 3:1) hell und dunkel. `--border`/`--input` dunkel sind `rgb(… / %)`, ungeprüft.
-* **Fokus-Ring hell nicht Lime:** Lime hat auf Weiß ~1,7:1, der Ring wäre unsichtbar. Hell
-  Olive, dunkel Lime.
-* **Links: `text-link`, nicht `text-primary`.** Primär ist hell Navy und vom Fließtext kaum
-  zu unterscheiden; `--link` ist Olivgrün (hell) bzw. helles Lime `#bfe25a` (dunkel).
-* **Buttons sind Pillen** über eine Regel auf `button/a[data-slot=button]` (schlägt die
-  `rounded-*`-Klassen der generierten Komponente). Eckig nur mit `!rounded-*`.
-* **Logo:** `<span class="bb-logo h-7 text-bb-navy dark:text-foreground">` — das PNG neben
-  `blueberk.css` ist eine Maske, nimmt die Textfarbe an und wird von Vite mitgebündelt.
+  Fokus-Ring 3:1, auch Kopfzeile und Text auf Glas) hell und dunkel.
+* **Amber ist nie Textfarbe auf hellem Grund und keine Deko.** Er markiert nur: Links und
+  Aktionen (`link`: Ink-Text, 3px Amber-Linie, 4px Abstand), den aktiven Navigationspunkt
+  (`nav-active`) und das betonte Wort einer Überschrift (`emphasis`, 6px/6px). Status-Badges
+  behalten Statusfarben. Links daher `class="link"`, nicht `text-link hover:underline`.
+* **Fokus-Ring hell Ink, dunkel Amber:** Amber hat auf Weiß unter 3:1. In der Kopfzeile
+  (immer Ink) setzt `.jl-on-dark` `--ring` auf Amber und die Wortmarke auf Off-White;
+  Portale (Dropdown-Inhalte) hängen am `<body>` und erben das nicht.
+* **`link` hat `padding-bottom`/negativen `margin-bottom` (7px)**, damit der Strich in
+  `truncate`-Elementen (`overflow: hidden`) nicht abgeschnitten wird. Das wirkt nur, wenn
+  `link` und `truncate` am *selben* Element sitzen: Steckt der Text in einem
+  `<span class="truncate">` im Link, schneidet der Span den Strich komplett ab (Symptom:
+  Link sieht aus wie normaler Text) — dann `link` an den Span. Für Nav-Boxen `nav-active`,
+  nicht `link`.
+* **Glas (`jl-glass`) nur mit Formen dahinter (`jl-shapes`)** und nie für Tabellen, Formulare,
+  Listen (Login: Markenbereich auf Glas, Formular auf opaker Karte). Bei
+  `prefers-reduced-transparency` opak.
+* **Manrope nur selbst gehostet** (`@fontsource/manrope`, 500 + 700, nie Google Fonts/CDN),
+  für Überschriften (`h1`, `h2`, Card-/Dialog-Titel) und Wortmarke; Fließtext ist System-Schrift.
+* **Logo:** `Lockup.svelte` (Icon `d.` + Wortmarke `junker.labs` + Deskriptor `deals`). Der
+  Punkt steht nur im Logo, im Fließtext „junker.labs deals" oder „Deals". Das SVG neben
+  `junkerlabs.css` ist eine Kopie aus `brand/logo/` (die Kachel wird per CSS gerundet).
+* **Favicons in `web/static/`** (`favicon.ico` 16/32/48, `apple-touch-icon.png` 180), aus
+  `brand/logo/deals-icon.png` erzeugt; verlinkt in `app.html`, nicht im Layout (der Browser
+  fragt vor dem ersten Skript). 16 px ist von Hand gepixelt: größere Glyphen, keine Rundungen
+  (Brand-Guide, Icons). **Kein SVG-Favicon:** Chrome, Edge und Firefox nähmen sonst das SVG
+  auch für 16 px und überspringen den gepixelten Frame. Nie per relativem Pfad auf `brand/`
+  verweisen.
 * **vitest liefert CSS-Importe leer, auch `?raw`.** Tests, die eine CSS-Datei lesen, nehmen
   `readFileSync('src/…')` (unter jsdom ist `import.meta.url` keine `file:`-URL).
 
@@ -52,7 +74,7 @@ importiert (`@lucide/svelte/icons/<name>`), damit nur genutzte Icons im Bundle l
   Schalter im Benutzermenü, Zustand in `lib/theme.svelte.ts` (localStorage `crm-theme`,
   ohne Wahl folgt es dem Gerät); `app.html` setzt die Klasse schon vor dem ersten Bild.
   Symptom bei einem Rückfall auf `@media (prefers-color-scheme: dark)` — in Tokens
-  (`blueberk.css`) oder in der `@custom-variant`: Gerät dunkel + Schalter hell ergibt eine
+  (`junkerlabs.css`) oder in der `@custom-variant`: Gerät dunkel + Schalter hell ergibt eine
   Mischung, einzelne Flächen (`dark:bg-input/30`) oder alle Tokens bleiben dunkel.
   Dunkle Werte deshalb immer unter `.dark { … }` bzw. `dark:` schreiben.
 * **`--chart-*` und `--sidebar-*` fehlen bewusst in `app.css`.** Wer per `add` eine

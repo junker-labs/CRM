@@ -174,7 +174,7 @@
 				{#if source}
 					<a
 						href="#activity-{source.id}"
-						class="truncate text-link hover:underline"
+						class="truncate link"
 						title={source.subject || typeLabel(source.type)}
 						onclick={showSource}
 					>

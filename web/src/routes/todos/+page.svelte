@@ -54,7 +54,7 @@
 		'rounded-md px-3 py-1 text-sm text-muted-foreground hover:text-foreground aria-[current=page]:bg-background aria-[current=page]:font-medium aria-[current=page]:text-foreground aria-[current=page]:shadow-sm';
 </script>
 
-<svelte:head><title>To-Dos – CRM</title></svelte:head>
+<svelte:head><title>To-Dos – junker.labs deals</title></svelte:head>
 
 <div class="mx-auto max-w-3xl p-4 sm:p-6">
 	<PageHeader title={all ? 'Alle To-Dos' : 'Meine To-Dos'} bind:search>

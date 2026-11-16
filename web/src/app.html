@@ -6,6 +6,11 @@
 		<!-- links in pasted e-mails must not trigger DNS lookups (tracking via DNS) -->
 		<meta http-equiv="x-dns-prefetch-control" content="off" />
 		<meta name="text-scale" content="scale" />
+		<!-- app icon d. (junker.labs deals); sources in web/static, generated from brand/logo -->
+		<!-- ICO only, no SVG icon: browsers would scale the SVG down to 16 px and skip the
+		     hand-drawn 16 px frame (brand/README.md, Icons) -->
+		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<!-- set the theme before the first paint (no light flash); same rule as resolveDark()
 		     in src/lib/theme.svelte.ts -->
 		<script>

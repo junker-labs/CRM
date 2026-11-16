@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { auth } from '#lib/auth.svelte.js';
+	import Lockup from '#lib/brand/Lockup.svelte';
 	import UserMenu from '#lib/profile/UserMenu.svelte';
 	import NavCounter from '#lib/todos/NavCounter.svelte';
 	import { goto } from '$app/navigation';
@@ -26,10 +27,9 @@
 	});
 </script>
 
+<!-- favicon + apple-touch-icon: static in app.html (browsers ask before this script runs) -->
 <svelte:head>
-	<!-- web/static/favicon.ico: browsers ask for /favicon.ico before this script runs -->
-	<link rel="icon" href="/favicon.ico" sizes="any" />
-	<title>CRM</title>
+	<title>junker.labs deals</title>
 </svelte:head>
 
 {#if isLogin}
@@ -37,17 +37,16 @@
 {:else if auth.loggedIn}
 	<!-- phones (390 px): tighter gaps; the navigation scrolls sideways instead of pushing the
 	     user menu (profile, dark mode, logout) off the screen -->
-	<header class="flex h-(--header-h) items-center gap-2 border-b bg-card px-3 sm:gap-6 sm:px-4">
-		<a href="/leads" class="flex shrink-0 items-center gap-2" aria-label="BlueBerk CRM – Leads">
-			<span class="bb-logo h-7 text-bb-navy dark:text-foreground" aria-hidden="true"></span>
-			<span class="border-l pl-2 text-sm font-semibold text-muted-foreground">CRM</span>
+	<header class="jl-on-dark flex h-(--header-h) items-center gap-2 bg-header px-3 text-header-foreground sm:gap-6 sm:px-4">
+		<a href="/leads" class="flex shrink-0 items-center rounded-md" aria-label="junker.labs deals – Leads">
+			<Lockup compact />
 		</a>
 		<nav class="flex min-w-0 flex-1 gap-1 overflow-x-auto text-sm" aria-label="Hauptnavigation">
 			{#each NAV as item (item.href)}
 				<a
 					href={item.href}
 					aria-current={page.url.pathname.startsWith(item.href) ? 'page' : undefined}
-					class="shrink-0 rounded-md px-2 py-1.5 whitespace-nowrap text-muted-foreground hover:text-foreground aria-[current=page]:bg-accent aria-[current=page]:font-medium aria-[current=page]:text-accent-foreground sm:px-3"
+					class="shrink-0 rounded-md px-2 py-1.5 whitespace-nowrap text-header-muted hover:text-header-foreground aria-[current=page]:font-medium aria-[current=page]:text-header-foreground aria-[current=page]:nav-active sm:px-3"
 				>
 					{item.label}
 					{#if item.href === '/todos'}<NavCounter />{/if}

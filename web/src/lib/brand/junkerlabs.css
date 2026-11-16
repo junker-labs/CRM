@@ -1,0 +1,218 @@
+/* junkerlabs UI-Modul: Farben, Schrift, Wortmarke, Unterstreichung und Glas für
+   junker.labs deals. Verbindlich ist der Brand-Guide (Repo junker-labs/brand, README.md);
+   wo er schweigt, kommen die Werte aus Workbench packages/ui/src/styles/tokens.css.
+   Die semantischen Namen folgen shadcn (--primary, --muted, ...).
+   Amber ist der einzige Akzent und markiert nur, wozu man handeln soll: Links/Aktionen,
+   den aktiven Navigationspunkt, das betonte Wort einer Überschrift. Keine Deko, kein Text
+   auf hellem Grund (zu hell). Status bleibt bei den Statusfarben.
+   Farben als Hex -- tokens.test.ts prüft daraus die Kontraste (WCAG AA). */
+
+/* Manrope selbst gehostet (SIL OFL), nie von Google Fonts/CDN. Nur 500 und 700. */
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/700.css';
+
+:root {
+	/* Palette (fest, in beiden Modi gleich) */
+	--jl-ink: #16181d;
+	--jl-paper: #f4f4f1;
+	--jl-amber: #e8a33d;
+	/* Logo-Punkt auf hellem Grund */
+	--jl-amber-deep: #d48a1c;
+	--jl-muted: #5a5d63;
+	--jl-muted-on-dark: #b9bbc0;
+	--jl-font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	--jl-font-display: 'Manrope', var(--jl-font);
+
+	--radius: 0.75rem;
+
+	--background: var(--jl-paper);
+	--foreground: var(--jl-ink);
+	--card: #ffffff;
+	--card-foreground: var(--jl-ink);
+	--popover: #ffffff;
+	--popover-foreground: var(--jl-ink);
+	--primary: var(--jl-ink);
+	--primary-foreground: var(--jl-paper);
+	--secondary: #ecece8;
+	--secondary-foreground: var(--jl-ink);
+	--muted: #ecece8;
+	--muted-foreground: var(--jl-muted);
+	--accent: #ecece8;
+	--accent-foreground: var(--jl-ink);
+	--destructive: #9a1b1b;
+	--border: #e2e2dd;
+	--input: #c9cac4;
+	/* Amber hat auf Weiß unter 3:1 -- der Fokus-Ring ist hell daher Ink, dunkel Amber */
+	--ring: var(--jl-ink);
+	/* Links sind Ink mit Amber-Unterstrich (Utility .link), nicht farbig */
+	--link: var(--jl-ink);
+
+	/* Kopfzeile: dunkle Ink-Fläche in beiden Modi */
+	--header: var(--jl-ink);
+	--header-foreground: var(--jl-paper);
+	--header-muted: var(--jl-muted-on-dark);
+	--header-ring: var(--jl-amber);
+
+	/* Wortmarke junker.labs auf der aktuellen Fläche (.jl-on-dark für dunkle Flächen) */
+	--logo-ink: var(--jl-ink);
+	--logo-dot: var(--jl-amber-deep);
+	--logo-muted: var(--jl-muted);
+
+	/* Glas: Fläche mit Deckkraft über weichen Amber-/Ink-Formen (.jl-glass, .jl-shapes) */
+	--glass: #ffffff;
+	--glass-opacity: 72%;
+	--shape-amber: var(--jl-amber);
+	--shape-ink: #cfd0cc;
+}
+
+/* Dunkel über die Klasse .dark auf <html> (lib/theme.svelte.ts + app.html), nie über
+   prefers-color-scheme -- siehe docs/pitfalls/designsystem.md */
+.dark {
+	--background: #111317;
+	--foreground: #ecedef;
+	--card: #1a1d22;
+	--card-foreground: #ecedef;
+	--popover: #1a1d22;
+	--popover-foreground: #ecedef;
+	--primary: var(--jl-paper);
+	--primary-foreground: var(--jl-ink);
+	--secondary: #2a2d33;
+	--secondary-foreground: #ecedef;
+	--muted: #22252b;
+	--muted-foreground: #a3a6ad;
+	--accent: #2a2d33;
+	--accent-foreground: #ecedef;
+	--destructive: #f3a6a6;
+	--border: #2c3038;
+	--input: #3a3f48;
+	--ring: var(--jl-amber);
+	--link: #ecedef;
+
+	--header: #0b0c0f;
+
+	--logo-ink: var(--jl-paper);
+	--logo-dot: var(--jl-amber);
+	--logo-muted: var(--jl-muted-on-dark);
+
+	--glass: #1a1d22;
+	--shape-amber: #7a5524;
+	--shape-ink: #2c3038;
+}
+
+/* Tailwind-Namen: bg-header, text-header-muted, decoration-jl-amber, font-display, ...
+   Die shadcn-Namen mappt app.css. */
+@theme inline {
+	--color-link: var(--link);
+	--color-header: var(--header);
+	--color-header-foreground: var(--header-foreground);
+	--color-header-muted: var(--header-muted);
+	--color-jl-ink: var(--jl-ink);
+	--color-jl-paper: var(--jl-paper);
+	--color-jl-amber: var(--jl-amber);
+	--font-sans: var(--jl-font);
+	--font-display: var(--jl-font-display);
+}
+
+/* Dunkle Fläche (Kopfzeile): Wortmarke in Off-White/Amber/Muted, Fokus-Ring in Amber
+   (~8:1 gegen Ink). Portale (Dropdowns) hängen am <body> und erben das nicht. */
+.jl-on-dark {
+	--logo-ink: var(--header-foreground);
+	--logo-dot: var(--jl-amber);
+	--logo-muted: var(--header-muted);
+	--ring: var(--header-ring);
+}
+
+@layer base {
+	/* Manrope für Überschriften, Wortmarke und Icons; Fließtext bleibt System-Schrift */
+	h1,
+	h2,
+	[data-slot='card-title'],
+	[data-slot='dialog-title'],
+	[data-slot='alert-dialog-title'],
+	[data-slot='sheet-title'] {
+		font-family: var(--jl-font-display);
+	}
+}
+
+/* Signatur: der dicke Amber-Unterstrich. Text bleibt in seiner Farbe, nur die Linie ist
+   Amber. link: Links und Aktionen (3px/4px), emphasis: betontes Wort einer Überschrift
+   (6px/6px). Padding + negativer Margin geben dem Strich Platz, auch in truncate-Elementen
+   (overflow: hidden würde ihn sonst abschneiden), ohne das Layout zu verschieben. */
+@utility link {
+	color: var(--link);
+	text-decoration-line: underline;
+	text-decoration-color: var(--jl-amber);
+	text-decoration-thickness: 3px;
+	text-underline-offset: 4px;
+	text-decoration-skip-ink: none;
+	padding-bottom: 7px;
+	margin-bottom: -7px;
+}
+
+@utility emphasis {
+	text-decoration-line: underline;
+	text-decoration-color: var(--jl-amber);
+	text-decoration-thickness: 6px;
+	text-underline-offset: 6px;
+	text-decoration-skip-ink: none;
+}
+
+/* Aktiver Navigationspunkt: nur die Linie, ohne den Padding-Trick (Nav-Links sind Boxen) */
+@utility nav-active {
+	text-decoration-line: underline;
+	text-decoration-color: var(--jl-amber);
+	text-decoration-thickness: 3px;
+	text-underline-offset: 4px;
+	text-decoration-skip-ink: none;
+}
+
+/* Glas: nur für Kopfbereiche, Dialoge/Menüs und die seltenen Kennzahl-Karten -- nie für
+   Tabellen, Formulare, Listen. Wirkt nur mit Formen dahinter (.jl-shapes). Ohne
+   Transparenz-Wunsch des Systems opak. */
+@utility jl-glass {
+	background-color: color-mix(in srgb, var(--glass) var(--glass-opacity), transparent);
+	backdrop-filter: blur(24px) saturate(140%);
+	border: 1px solid color-mix(in srgb, var(--glass) 60%, transparent);
+	@media (prefers-reduced-transparency: reduce) {
+		background-color: var(--card);
+		backdrop-filter: none;
+	}
+}
+
+/* Weiche Amber- und Ink-Formen hinter Glas. Element absolut im Container, aria-hidden. */
+@utility jl-shapes {
+	pointer-events: none;
+	background:
+		radial-gradient(circle at 18% 22%, var(--shape-amber) 0 14rem, transparent 14rem),
+		radial-gradient(circle at 82% 78%, var(--shape-ink) 0 16rem, transparent 16rem);
+	filter: blur(48px);
+	opacity: 0.85;
+}
+
+/* Wortmarke junker.labs: junker 700, Punkt 700 Amber, labs 500 Muted (Brand-Guide, Logo) */
+.jl-wordmark {
+	font-family: var(--jl-font-display);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	color: var(--logo-ink);
+	white-space: nowrap;
+}
+.jl-wordmark .jl-dot {
+	color: var(--logo-dot);
+}
+.jl-wordmark .jl-labs {
+	font-weight: 500;
+	color: var(--logo-muted);
+}
+.jl-wordmark .jl-descriptor {
+	margin-left: 0.3em;
+	font-weight: 500;
+	color: var(--logo-ink);
+}
+
+/* App-Icon d.: Ink-Kachel, Eckenradius ~22 % der Kantenlänge */
+.jl-icon {
+	display: inline-block;
+	flex: none;
+	border-radius: 22%;
+}
